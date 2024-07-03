@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>{{ post.title }}</title>
 </head>
 <body>
     <h1>{{ post.title }}</h1>
     <p>{{ post.content }}</p>
-    <small>{{ post.created_at }}</small>
+    <p>Category: {{ post.category.name }}</p>
+    <p>Created at: {{ post.created_at }}</p>
+    <p>Updated at: {{ post.updated_at }}</p>
+
+    <h2>Comments</h2>
+    <div>
+        {% for comment in comments %}
+            <p>{{ comment.text }} - {{ comment.user.username }} on {{ comment.created_at }}</p>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Add a comment</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+
+    <a href="{% url 'post_list' %}">Back to posts</a>
 </body>
 </html>

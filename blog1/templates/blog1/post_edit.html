@@ -1,14 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>New post</title>
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Edit{% else %}New{% endif %} Post</title>
 </head>
 <body>
-    <h1>New Post</h1>
+    <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Post</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.non_field_errors }}
+        <div>
+            <label for="{{ form.title.id_for_label }}">Title:</label>
+            {{ form.title }}
+        </div>
+        <div>
+            <label for="{{ form.content.id_for_label }}">Content:</label>
+            {{ form.content }}
+        </div>
+        <div>
+            <label for="{{ form.category.id_for_label }}">Category:</label>
+            {{ form.category }}
+        </div>
         <button type="submit">Save</button>
     </form>
+    <a href="{% url 'post_list' %}">Cancel</a>
 </body>
 </html>
