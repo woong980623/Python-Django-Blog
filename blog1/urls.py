@@ -1,5 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import post_list, post_detail, post_new, post_edit, post_delete, edit_profile, profile_view
 
 urlpatterns = [
@@ -13,3 +15,6 @@ urlpatterns = [
     path('profile/edit/', edit_profile, name='edit_profile'),
     path('profile/', profile_view, name='profile'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

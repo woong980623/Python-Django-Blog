@@ -14,6 +14,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
 
     def __str__(self):
         return self.title
