@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Posts</title>
+</head>
+<body>
+    <h1>Blog Posts</h1>
+
+    <div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}">Create New Post</a>
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <h2>All Categories</h2>
+        <ul>
+            <li><a href="{% url 'post_list' %}?category=">All</a></li>
+            {% for category in categories %}
+                <li><a href="{% url 'post_list' %}?category={{ category.id }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        {% for post in posts %}
+            <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <p>{{ post.content|truncatewords:20 }}</p>
+            <p><small>{{ post.created_at }}</small></p>
+            <p>Author: {{ post.author.username }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
